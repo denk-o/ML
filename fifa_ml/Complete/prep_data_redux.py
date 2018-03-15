@@ -1,3 +1,4 @@
+# coding=utf-8
 import numpy as np #lin alg
 import pandas as pd #data processing
 
@@ -32,3 +33,37 @@ df = df.loc[df['Finishing'].apply(lambda x: between_1_and_99(x))]
 df['Finishing']=df['Finishing'].astype('int')
 
 print(df.head())
+print('Describe: ')
+print(df.describe())
+
+
+#part 2
+from sklearn.model_selection import train_test_split
+
+train, test = train_test_split(df, test_size=0.20, random_state=99)
+xtrain = train[['Value']]
+ytrain = train[['Overall']]
+
+xtest = test[['Value']]
+ytest = test[['Overall']]
+
+#create linear regression object
+
+from sklearn import linear_model
+regr = linear_model.LinearRegression()
+regr.fit(xtrain, ytrain)
+y_pred = regr.predict(xtest)
+
+import matplotlib.pyplot as plt
+
+plt.scatter(xtest, ytest, color ='black')
+plt.plot(xtest, y_pred, color='blue', linewidth=3)
+plt.xlabel("Value")
+plt.ylabel("overall")
+#plt.show()
+
+from sklearn.metrics import mean_squared_error, r2_score
+
+print("Mean squared error: %.2f" % r2_score(ytest,y_pred))
+print('Variance score: %.2f' % r2_score(ytest, y_pred))
+
