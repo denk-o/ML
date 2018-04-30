@@ -63,12 +63,11 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
-
-
-
-
-
-
+X = [ones(size(X,1),1) X];
+z = sigmoid(X*Theta1');
+expression1 = -y'*log(z);
+expression2 = (1-y)'*log(1-z);
+J = (1/m)*(expression1-expression2);
 
 
 
