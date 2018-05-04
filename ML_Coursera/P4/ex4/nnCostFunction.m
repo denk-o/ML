@@ -67,18 +67,24 @@ for i = 1:m
 		Y(i, :) = id(y(i), :);
 end
 a1 = [ones(m,1) X];
-z2 = sigmoid(a1*Theta1');
-a2 = [ones(size(a1,1),1), z2];
-z3 = sigmoid(a2*Theta2');
-h = a3 = z3;
+z2 = (a1*Theta1');
+a2 = [ones(size(a1,1),1), sigmoid(z2)];
+z3 = (a2*Theta2');
+h = a3 = sigmoid(z3);
 
 err = (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2,2)) + sum(sum(Theta2(:,2:end).^2,2)));
 
 J = (1/m)*(sum(sum(-Y.*log(h) - (1-Y).*log(1-h),2)));
 J = J + err;
 
-Theta1_grad
-Theta2_grad
+output_layer = a3 - Y;
+hidden_layer = (output_layer*Theta2.*sigmoidGradient([ones(size(z2,1),1) z2]))(:,2:end);
+
+delta1 = hidden_layer'*a1;
+delta2 = output_layer'*a2;
+
+Theta1_grad = delta1./m;
+Theta2_grad = delta2./m;
 
 
 
