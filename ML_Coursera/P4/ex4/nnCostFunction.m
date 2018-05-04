@@ -77,8 +77,8 @@ err = (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2,2)) + sum(sum(Theta2(:,2:end).^
 J = (1/m)*(sum(sum(-Y.*log(h) - (1-Y).*log(1-h),2)));
 J = J + err;
 
-
-
+Theta1_grad
+Theta2_grad
 
 
 
