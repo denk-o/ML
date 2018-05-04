@@ -83,8 +83,8 @@ hidden_layer = (output_layer*Theta2.*sigmoidGradient([ones(size(z2,1),1) z2]))(:
 delta1 = hidden_layer'*a1;
 delta2 = output_layer'*a2;
 
-Theta1_grad = delta1./m;
-Theta2_grad = delta2./m;
+Theta1_grad = delta1./m + (lambda/m)*[zeros(size(Theta1,1),1) Theta1(:,2:end)];
+Theta2_grad = delta2./m + (lambda/m)*[zeros(size(Theta2,1),1) Theta2(:,2:end)];
 
 
 
